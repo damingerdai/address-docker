@@ -12,5 +12,8 @@
     "nodejs"
   ],
   "author": "arthur ming",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.5.2"
+  }
 }
