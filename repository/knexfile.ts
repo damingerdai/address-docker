@@ -1,5 +1,3 @@
-declare var module: any;
-
 const environment = process.env.NODE_ENV || 'development';
 const dbName = process.env.MYSQL_DB_NAME || 'address';
 
@@ -17,7 +15,7 @@ const configuration = {
         host: process.env.MYSQL_HOST || '127.0.0.1',
         port: process.env.MYSQL_PORT ? parseInt(process.env.MYSQL_PORT, 10) : 3306,
         user: process.env.MYSQL_USER || 'root',
-        password: process.env.MYSQL_PASSWORD,
+        password: process.env.MYSQL_PASSWORD || '267552',
         database: process.env.NODE_ENV === 'test' ? `${dbName}_test` : dbName
     },
     migrations: {
