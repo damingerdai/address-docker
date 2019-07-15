@@ -1,5 +1,7 @@
 import * as Knex from 'knex';
 import { provinces } from './data/province';
+import { cities } from './data/city';
+import { countries } from './data/country';
 
 const createTable = async (knex: Knex) => {
     await knex.raw('SET FOREIGN_KEY_CHECKS = 0');
@@ -53,9 +55,45 @@ const seedProvince = async (knex: Knex) => {
     }));
 }
 
+const seedCity = async (knex: Knex) => {
+    await Promise.all(Object.keys(cities)
+        .map(async (key) => {
+            const data = (cities as any)[key] as { province: string, name: string, id: string}[];
+            await knex('city').insert(data.map(city => {
+                return {
+                    name: city.name,
+                    city_id: city.id,
+                    province_id: key
+                }
+            }))
+        })
+    );
+}
+
+const seedCountry = async (knex: Knex) => {
+    await Promise.all(Object.keys(countries)
+        .map(async (key) => {
+            const data = (countries as any)[key] as { city: string, name: string, id: string}[];
+            await knex('country').insert(data.map(country => {
+                return {
+                    name: country.name,
+                    country_id: country.id,
+                    city_id: key
+                }
+            }))
+        })
+    );
+}
+
+
+
 export const seed = async (knex: Knex) => {
     await createTable(knex);
 
     await seedProvince(knex);
+
+    await seedCity(knex);
+
+    await seedCountry(knex);
 }
 
