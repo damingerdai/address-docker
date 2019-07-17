@@ -132,19 +132,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var koa_1 = __importDefault(__webpack_require__(1));
+var koa_router_1 = __importDefault(__webpack_require__(2));
+var koa_bodyparser_1 = __importDefault(__webpack_require__(3));
 var app = new koa_1.default();
+app.use(koa_bodyparser_1.default());
 app.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, next()];
+            case 0:
+                console.log("Process " + ctx.request.method + " " + ctx.request.url + "...");
+                return [4 /*yield*/, next()];
             case 1:
                 _a.sent();
-                ctx.response.type = 'text/html';
-                ctx.response.body = '<h1>Hello, koa2!</h1>';
                 return [2 /*return*/];
         }
     });
 }); });
+var router = new koa_router_1.default();
+router.get('/hello/:name', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+    var name;
+    return __generator(this, function (_a) {
+        name = ctx.params.name;
+        ctx.response.body = "<h1>Hello, " + name + "!</h1>";
+        return [2 /*return*/];
+    });
+}); });
+router.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        ctx.response.body = "<h1>Index</h1>\n        <form action=\"/signin\" method=\"post\">\n            <p>Name: <input name=\"name\" value=\"koa\"></p>\n            <p>Password: <input name=\"password\" type=\"password\"></p>\n            <p><input type=\"submit\" value=\"Submit\"></p>\n        </form>";
+        return [2 /*return*/];
+    });
+}); });
+router.post('/signin', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+    var name, password;
+    return __generator(this, function (_a) {
+        console.log(ctx.request);
+        name = ctx.request.body.name || '';
+        password = ctx.request.body.password || '';
+        console.log("signin with name: " + name + ", password: " + password);
+        if (name === 'koa' && password === '12345') {
+            ctx.response.body = "<h1>Welcome, " + name + "!</h1>";
+        }
+        else {
+            ctx.response.body = "<h1>Login failed!</h1>\n        <p><a href=\"/\">Try again</a></p>";
+        }
+        return [2 /*return*/];
+    });
+}); });
+app.use(router.routes());
 // 在端口3000监听:
 app.listen(8443);
 console.log('app started at port 8443...');
@@ -155,6 +190,18 @@ console.log('app started at port 8443...');
 /***/ (function(module, exports) {
 
 module.exports = require("koa");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-router");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-bodyparser");
 
 /***/ })
 /******/ ]);
