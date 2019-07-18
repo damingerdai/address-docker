@@ -1,5 +1,5 @@
 import { Context } from 'koa';
 
-// export class RestKoaContext implements Context {
-    
-// }
+export interface RestKoaContext extends Context {
+    rest: (data: any) => void;
+}
