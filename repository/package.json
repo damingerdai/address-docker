@@ -11,7 +11,7 @@
     "create:db": "node scripts/create-db",
     "delete:db": "node scripts/delete-db",
     "test:create:db": "NODE_ENV=test yarn create:db",
-    "test": "jest"
+    "test": "npx jest"
   },
   "author": "",
   "license": "ISC",
