@@ -1,4 +1,14 @@
+import { camelCase, snakeCase} from '../lib/changeCase';
+
 const dbName = process.env.MYSQL_DB_NAME || 'address';
+
+const specialChars = ['*'];
+
+const convertToCase = (val: any, func: (data: any) => any) => {
+	if (specialChars.includes(val)) return val;
+
+	return func(val);
+};
 
 export default {
     db: {
@@ -16,6 +26,8 @@ export default {
             user: process.env.MYSQL_USER || 'root',
             password: process.env.MYSQL_PASSWORD || '267552',
             database: dbName
-		}
+		},
+		postProcessResponse: (result: any, queryContext: any) => convertToCase(result, camelCase),
+		wrapIdentifier: (value: string, origImpl: (value: string) => string, queryContext: any) => origImpl(convertToCase(value, snakeCase))
 	},
 }

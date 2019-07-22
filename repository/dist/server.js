@@ -134,7 +134,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var koa_1 = __importDefault(__webpack_require__(1));
 var koa_bodyparser_1 = __importDefault(__webpack_require__(2));
 var route_1 = __webpack_require__(3);
-var rest_1 = __webpack_require__(9);
+var rest_1 = __webpack_require__(12);
 var app = new koa_1.default();
 app.use(koa_bodyparser_1.default());
 app.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
@@ -252,7 +252,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var db_1 = __importDefault(__webpack_require__(6));
 exports.provinceService = {
     listProvinces: function () {
-        return db_1.default.select('id', 'name').from('province');
+        return db_1.default.select('id', 'name', 'provinceId').from('province');
+    },
+    geProvince: function (id) {
+        return db_1.default.select('id', 'name', 'provinceId').from('province').where('id', id).first();
+        ;
     }
 };
 
@@ -285,7 +289,14 @@ module.exports = require("knex");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var changeCase_1 = __webpack_require__(9);
 var dbName = process.env.MYSQL_DB_NAME || 'address';
+var specialChars = ['*'];
+var convertToCase = function (val, func) {
+    if (specialChars.includes(val))
+        return val;
+    return func(val);
+};
 exports.default = {
     db: {
         charset: 'utf8',
@@ -302,13 +313,76 @@ exports.default = {
             user: process.env.MYSQL_USER || 'root',
             password: process.env.MYSQL_PASSWORD || '267552',
             database: dbName
-        }
+        },
+        postProcessResponse: function (result, queryContext) { return convertToCase(result, changeCase_1.camelCase); },
+        wrapIdentifier: function (value, origImpl, queryContext) { return origImpl(convertToCase(value, changeCase_1.snakeCase)); }
     },
 };
 
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var _ = __importStar(__webpack_require__(10));
+var arrays_1 = __webpack_require__(11);
+var transform = function (data, func) {
+    if (!data) {
+        return data;
+    }
+    else if (arrays_1.isArray(data)) {
+        return data.map(function (elem) { return transform(elem, func); });
+    }
+    else if (typeof data === 'object') {
+        return _.mapKeys(data, function (value, key) { return transform(key, func); });
+    }
+    else {
+        return func(data);
+    }
+};
+exports.camelCase = function (data) {
+    return transform(data, _.camelCase);
+};
+exports.snakeCase = function (data) {
+    return transform(data, _.snakeCase);
+};
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isArray = function (data) {
+    if (!Array.isArray) {
+        return Object.prototype.toString.call(data) === '[object Array]';
+    }
+    else {
+        return Array.isArray(data);
+    }
+};
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

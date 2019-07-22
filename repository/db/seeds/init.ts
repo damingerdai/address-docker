@@ -47,7 +47,7 @@ const createTable = async (knex: Knex) => {
 }
 
 const seedProvince = async (knex: Knex) => {
-    return knex('province').insert(provinces.map(province => {
+    await knex('province').insert(provinces.map(province => {
         return {
             name: province.name,
             province_id: province.id
