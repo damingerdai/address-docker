@@ -134,7 +134,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var koa_1 = __importDefault(__webpack_require__(1));
 var koa_bodyparser_1 = __importDefault(__webpack_require__(2));
 var route_1 = __webpack_require__(3);
-var rest_1 = __webpack_require__(12);
+var rest_1 = __webpack_require__(13);
 var app = new koa_1.default();
 app.use(koa_bodyparser_1.default());
 app.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
@@ -174,6 +174,34 @@ module.exports = require("koa-bodyparser");
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var koa_router_1 = __importDefault(__webpack_require__(4));
+var province_handler_1 = __webpack_require__(5);
+var routes = new koa_router_1.default();
+// routes.get('/api/v1/provinces', async (ctx: Context, next: () => Promise<any>) => {
+//     const provinces = await provinceService.listProvinces();
+//     ctx.response.type = 'application/json';
+//     ctx.response.body =  provinces;
+// })
+routes.get('/api/v1/provinces', province_handler_1.ProvinceHandler.listProvinces());
+exports.router = routes;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-router");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -209,54 +237,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var koa_router_1 = __importDefault(__webpack_require__(4));
-var province_service_1 = __webpack_require__(5);
-var routes = new koa_router_1.default();
-routes.get('/api/v1/provinces', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    var provinces;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, province_service_1.provinceService.listProvinces()];
-            case 1:
-                provinces = _a.sent();
-                ctx.response.type = 'application/json';
-                ctx.response.body = provinces;
-                return [2 /*return*/];
-        }
-    });
-}); });
-exports.router = routes;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("koa-router");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var db_1 = __importDefault(__webpack_require__(6));
-exports.provinceService = {
+var province_service_1 = __webpack_require__(6);
+exports.ProvinceHandler = {
     listProvinces: function () {
-        return db_1.default.select('id', 'name', 'provinceId').from('province');
-    },
-    geProvince: function (id) {
-        return db_1.default.select('id', 'name', 'provinceId').from('province').where('id', id).first();
-        ;
+        return function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+            var provinces;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log(ctx);
+                        console.log('-------');
+                        console.log(ctx.reset);
+                        return [4 /*yield*/, province_service_1.provinceService.listProvinces()];
+                    case 1:
+                        provinces = _a.sent();
+                        ctx.rest(provinces);
+                        return [2 /*return*/];
+                }
+            });
+        }); };
     }
 };
 
@@ -271,25 +272,47 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var knex_1 = __importDefault(__webpack_require__(7));
-var config_1 = __importDefault(__webpack_require__(8));
-exports.default = knex_1.default(config_1.default.db);
+var db_1 = __importDefault(__webpack_require__(7));
+exports.provinceService = {
+    listProvinces: function () {
+        return db_1.default.select('id', 'name', 'provinceId').from('province');
+    },
+    geProvince: function (id) {
+        return db_1.default.select('id', 'name', 'provinceId').from('province').where('id', id).first();
+        ;
+    }
+};
 
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var knex_1 = __importDefault(__webpack_require__(8));
+var config_1 = __importDefault(__webpack_require__(9));
+exports.default = knex_1.default(config_1.default.db);
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("knex");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var changeCase_1 = __webpack_require__(9);
+var changeCase_1 = __webpack_require__(10);
 var dbName = process.env.MYSQL_DB_NAME || 'address';
 var specialChars = ['*'];
 var convertToCase = function (val, func) {
@@ -321,7 +344,7 @@ exports.default = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -334,8 +357,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = __importStar(__webpack_require__(10));
-var arrays_1 = __webpack_require__(11);
+var _ = __importStar(__webpack_require__(11));
+var arrays_1 = __webpack_require__(12);
 var transform = function (data, func) {
     if (!data) {
         return data;
@@ -359,13 +382,13 @@ exports.snakeCase = function (data) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -382,7 +405,7 @@ exports.isArray = function (data) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -431,9 +454,11 @@ exports.restify = function (pathPrefix) {
             switch (_a.label) {
                 case 0:
                     if (ctx.request.path.startsWith(pathPrefix)) {
-                        ctx.reset = function (data) {
+                        console.log(ctx.request.path);
+                        ctx.rest = function (data) {
                             ctx.response.type = 'application/json';
                             ctx.response.body = data;
+                            console.log("data: " + data);
                         };
                     }
                     return [4 /*yield*/, next()];
