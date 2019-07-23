@@ -181,12 +181,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var koa_router_1 = __importDefault(__webpack_require__(4));
 var province_handler_1 = __webpack_require__(5);
 var routes = new koa_router_1.default();
-// routes.get('/api/v1/provinces', async (ctx: Context, next: () => Promise<any>) => {
-//     const provinces = await provinceService.listProvinces();
-//     ctx.response.type = 'application/json';
-//     ctx.response.body =  provinces;
-// })
 routes.get('/api/v1/provinces', province_handler_1.ProvinceHandler.listProvinces());
+routes.get('/api/v1/province/:id', province_handler_1.ProvinceHandler.getProvince());
 exports.router = routes;
 
 
@@ -246,14 +242,26 @@ exports.ProvinceHandler = {
             var provinces;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(ctx);
-                        console.log('-------');
-                        console.log(ctx.reset);
-                        return [4 /*yield*/, province_service_1.provinceService.listProvinces()];
+                    case 0: return [4 /*yield*/, province_service_1.provinceService.listProvinces()];
                     case 1:
                         provinces = _a.sent();
                         ctx.rest(provinces);
+                        return [2 /*return*/];
+                }
+            });
+        }); };
+    },
+    getProvince: function () {
+        return function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+            var id, province;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        id = ctx.params.id;
+                        return [4 /*yield*/, province_service_1.provinceService.geProvince(id)];
+                    case 1:
+                        province = _a.sent();
+                        ctx.rest(province);
                         return [2 /*return*/];
                 }
             });
@@ -454,11 +462,9 @@ exports.restify = function (pathPrefix) {
             switch (_a.label) {
                 case 0:
                     if (ctx.request.path.startsWith(pathPrefix)) {
-                        console.log(ctx.request.path);
                         ctx.rest = function (data) {
                             ctx.response.type = 'application/json';
                             ctx.response.body = data;
-                            console.log("data: " + data);
                         };
                     }
                     return [4 /*yield*/, next()];
