@@ -2,7 +2,11 @@ import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
 const typeDefs = gql(`
+    "query api"
     type Query {
+        """
+            hello
+        """
         hello: String
     }
 `);
@@ -15,7 +19,13 @@ const resolvers = {
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    playground: {
+        settings: {
+            'editor.theme': 'dark',
+			'editor.cursorShape': 'line'
+        }
+    }
 });
 
 const app = express();

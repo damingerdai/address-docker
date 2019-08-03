@@ -4,7 +4,7 @@ const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
   mode: process.env.NODE_ENV === "production" ? "production" : "none",
   entry: {
-    server: "./server.ts"
+    server: "./src/server.ts"
   },
   devtool: "inline-source-map",
   target: "node",
