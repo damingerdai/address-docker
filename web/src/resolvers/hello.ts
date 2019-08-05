@@ -1,1 +1,5 @@
-export const hello = () => 'Hello World';
+export const hello = {
+	Query: {
+		hello: () => 'hello world'
+	}
+}

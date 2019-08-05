@@ -1,7 +1,9 @@
+import { mergeResolvers } from 'merge-graphql-schemas';
+
 import { hello } from './hello';
 
-export const resolvers = {
-	Query: {
-		hello: hello,
-	},
-};
+const resolversArr = [
+	hello
+]
+
+export const resolvers = mergeResolvers(resolversArr);
