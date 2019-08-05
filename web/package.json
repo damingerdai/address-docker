@@ -5,8 +5,8 @@
   "main": "index.js",
   "sideEffects": false,
   "scripts": {
-    "start": "node index.js",
-    "build": "npx webpack",
+    "start": "npx webpack && node dist/server.js",
+    "build": "npx webpack  -p",
     "eslint": "npx eslint ./src/*.ts",
     "lint": "yarn eslint && lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
