@@ -1,5 +1,7 @@
 export const hello = {
 	Query: {
-		hello: () => 'hello world'
-	}
-}
+		hello(parent: any, args: any, context: any, info: any) {
+			return 'hello world';
+		},
+	},
+};
