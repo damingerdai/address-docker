@@ -5,7 +5,7 @@
   "main": "index.js",
   "sideEffects": false,
   "scripts": {
-    "start": "npx webpack && node dist/server.js",
+    "start": "npx webpack-dev-server --open",
     "build": "npx webpack  -p",
     "eslint": "npx eslint ./src/*.ts",
     "lint": "yarn eslint && lint-staged",
@@ -41,6 +41,7 @@
     "typescript": "^3.5.3",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
     "webpack-node-externals": "^1.7.2"
   }
 }
