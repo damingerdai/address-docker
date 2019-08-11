@@ -1,12 +1,14 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
+import { context } from './context';
 import { resolvers } from './resolvers';
 import { typeDefs } from './schema';
 
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
+	context,
 	playground: {
 		settings: {
 			'editor.theme': 'dark',

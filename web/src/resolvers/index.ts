@@ -5,4 +5,4 @@ import { books } from './book';
 
 const resolversArr = [hello, books];
 
-export const resolvers = mergeResolvers(resolversArr);
+export const resolvers = mergeResolvers(resolversArr as any[]);

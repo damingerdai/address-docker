@@ -1,3 +1,3 @@
 export const config = {
-	repository: 'https'
-}
+	repository: 'https',
+};
