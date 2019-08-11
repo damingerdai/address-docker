@@ -23,7 +23,7 @@ server.applyMiddleware({
 
 app.listen(
 	{
-		port: 4000,
+		port: 8443,
 	},
-	() => console.log('Running a GraphQL API server at localhost:4000/graphql')
+	() => console.log('Running a GraphQL API server at localhost:8443/graphql')
 );

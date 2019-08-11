@@ -26,6 +26,18 @@ services:
       - db
     networks: 
       - daming-network
+  web:
+    build: ./web
+    command: yarn start
+    ports: 
+      - 8080:8443
+    volumes: 
+      - ./web:/app
+    depends_on: 
+      - repository
+    env_file: secrets/web.env
+    networks: 
+      - daming-network
 networks:
   daming-network:
     external: false

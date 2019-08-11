@@ -5,7 +5,7 @@
   "main": "index.js",
   "sideEffects": false,
   "scripts": {
-    "start": "npx webpack-dev-server --open",
+    "start": "yarn run build && node dist/server.js",
     "build": "npx webpack  -p",
     "eslint": "npx eslint ./src/*.ts",
     "lint": "yarn eslint && lint-staged",
