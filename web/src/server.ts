@@ -5,6 +5,15 @@ import { context } from './context';
 import { resolvers } from './resolvers';
 import { typeDefs } from './schema';
 
+// const required = ['REPOSITORY_URL'];
+
+// eslint-disabled: no-prototype-builtins
+// const missing = required.filter(e => !process.env.hasOwnProperty(e));
+
+// if (missing.length) {
+// 	throw new Error(`Missing some required env variables: ${missing.join(',')}`);
+// }
+
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
