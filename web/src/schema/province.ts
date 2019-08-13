@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-
 export const province = gql`
 	type Province {
 		id: String
@@ -9,4 +8,4 @@ export const province = gql`
 	type Query {
 		provinces: [Province]
 	}
-`
+`;
