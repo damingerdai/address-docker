@@ -7,15 +7,14 @@ export interface Model<T> {
 }
 
 /**
-* 请求方法
-*/
+ * 请求方法
+ */
 export type Method = 'get' | 'post' | 'put' | 'delete';
 
 /**
-* 请求对象
-*/
+ * 请求对象
+ */
 export interface HttpParam {
-
 	/**
 	 * 请求url
 	 */
@@ -29,7 +28,7 @@ export interface HttpParam {
 	/**
 	 * 请求体
 	 */
-	data?:  Model<string>;
+	data?: Model<string>;
 
 	/**
 	 * 请求url参数
@@ -40,5 +39,4 @@ export interface HttpParam {
 	 * 请求头
 	 */
 	headers?: Model<string>;
-
 }

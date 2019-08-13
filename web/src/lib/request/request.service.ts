@@ -4,14 +4,12 @@ import { FilterChain, FilterAction, Filter } from './request.filter';
 import { HttpParam } from './request.type';
 
 export class RequestService implements FilterAction {
-
 	private filterChain: FilterChain;
 
 	addFilter(filter: Filter): void {
 		if (filter) {
 			this.filterChain.addFilter(filter);
 		}
-
 	}
 	addFilters(...filters: Filter[]): void {
 		if (filters && filters.length > 0) {
