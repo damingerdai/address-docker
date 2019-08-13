@@ -1,11 +1,16 @@
 import { IContext } from 'src/types';
-import { ProvinceService } from 'src/service';
+import { ProvinceService, IProvince } from 'src/service';
 
 export const province = {
 	Query: {
 		provinces: (root: any, query: any, context: IContext) => {
 			const provinceService = new ProvinceService();
-			return provinceService.listProvince();
+			return provinceService.listProvinces();
+		},
+
+		province: (root: any, query: IProvince, context: IContext) => {
+			const provinceService = new ProvinceService();
+			return provinceService.getProvince(query.id);
 		},
 	},
 };

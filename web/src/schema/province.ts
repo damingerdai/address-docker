@@ -7,5 +7,6 @@ export const province = gql`
 	}
 	type Query {
 		provinces: [Province]
+		province(id: String): Province
 	}
 `;

@@ -1,5 +1,5 @@
 import { RequestService, HttpParam } from 'src/lib/request';
-import { Provinces } from '../province/provinces.type';
+import { Provinces, IProvince } from '../province/provinces.type';
 
 export class ProvinceService {
 	private requestService: RequestService;
@@ -13,10 +13,17 @@ export class ProvinceService {
 		this.requestService.addFilter(filter);
 	}
 
-	listProvince(): Promise<Provinces> {
+	listProvinces(): Promise<Provinces> {
 		return this.requestService.get<Provinces>({
 			method: 'get',
 			url: '/api/v1/provinces',
+		});
+	}
+
+	getProvince(id: string): Promise<IProvince> {
+		return this.requestService.get<IProvince>({
+			method: 'get',
+			url: `/api/v1/province/${id}`,
 		});
 	}
 }
