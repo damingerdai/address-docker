@@ -4,6 +4,7 @@
   "description": "a simple class system",
   "main": "index.js",
   "scripts": {
+    "init:project": "sh ./scripts/init.sh",
     "start": "docker-compose up",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,8 +14,5 @@
     "nodejs"
   ],
   "author": "arthur ming",
-  "license": "ISC",
-  "dependencies": {
-    "typescript": "^3.5.2"
-  }
+  "license": "ISC"
 }
