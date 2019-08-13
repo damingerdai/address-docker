@@ -1,3 +1,6 @@
 [submodule "repository"]
 	path = repository
 	url = git@github.com:damingerdai/address-docker-repository.git
+[submodule "web"]
+	path = web
+	url = git@github.com:damingerdai/address-docker-web.git
