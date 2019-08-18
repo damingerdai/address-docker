@@ -1,12 +1,14 @@
 {
   "name": "class-pass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a simple class system",
   "main": "index.js",
   "scripts": {
     "init:project": "sh ./scripts/init.sh",
     "start": "docker-compose up",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog:all": "npx conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "version": "yarn changelog:all && git add CHANGELOG.md"
   },
   "keywords": [
     "docker",
@@ -14,5 +16,8 @@
     "nodejs"
   ],
   "author": "arthur ming",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "conventional-changelog-cli": "^2.0.23"
+  }
 }
