@@ -1,6 +1,8 @@
 [submodule "repository"]
 	path = repository
+	ignore = all
 	url = git@github.com:damingerdai/address-docker-repository.git
 [submodule "web"]
 	path = web
+	ignore = all
 	url = git@github.com:damingerdai/address-docker-web.git
